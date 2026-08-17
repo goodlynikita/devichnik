@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3 сентября. День прощаний</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rose: #c0527a;
+  --rose-light: #e8a0c0;
+  --rose-pale: #f5d0e0;
+  --plum: #1e0810;
+  --plum-mid: #2d1020;
+  --plum-light: #3d1830;
+  --gold: #c8a06a;
+  --cream: #fdf5f0;
+  --text: #f5e6ef;
+  --text-muted: rgba(245,230,239,0.55);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--plum);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- PARTICLES ---- */
+#particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: float-up linear infinite;
+}
+@keyframes float-up {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* ---- HERO ---- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px 80px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 30%, rgba(192,82,122,0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 70%, rgba(200,160,106,0.1) 0%, transparent 60%),
+    linear-gradient(180deg, #2d1020 0%, #1e0810 100%);
+  z-index: 0;
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 560px; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(200,160,106,0.4);
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  border-radius: 40px;
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: fade-in-up 0.8s ease 0.2s forwards;
+}
+.eyebrow::before, .eyebrow::after {
+  content: '✦';
+  font-size: 8px;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(54px, 14vw, 96px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -1px;
+  color: #fff;
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: fade-in-up 0.9s ease 0.4s forwards;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--rose-light);
+  display: block;
+}
+
+.hero-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 5vw, 28px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--gold);
+  margin: 24px 0 20px;
+  opacity: 0;
+  animation: fade-in-up 0.9s ease 0.6s forwards;
+}
+
+.hero-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 360px;
+  margin: 0 auto 48px;
+  opacity: 0;
+  animation: fade-in-up 0.9s ease 0.8s forwards;
+}
+
+.hero-cta {
+  display: inline-block;
+  background: linear-gradient(135deg, #c0527a 0%, #8b2550 100%);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 18px 48px;
+  border-radius: 60px;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: fade-in-up 0.9s ease 1s forwards;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 40px rgba(192,82,122,0.35);
+}
+.hero-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  border-radius: inherit;
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 50px rgba(192,82,122,0.5);
+}
+.hero-cta:active { transform: scale(0.97); }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  z-index: 1;
+  animation: fade-in 1s ease 1.6s both;
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--rose), transparent);
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.1); }
+}
+
+/* ---- SECTIONS ---- */
+section {
+  position: relative;
+  z-index: 1;
+  padding: 80px 24px;
+}
+
+.section-inner {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 8vw, 52px);
+  font-weight: 300;
+  line-height: 1.1;
+  color: #fff;
+  margin-bottom: 32px;
+}
+.section-title em { font-style: italic; color: var(--rose-light); }
+
+/* ---- WHAT YOU GET ---- */
+.what-bg {
+  background: linear-gradient(180deg, var(--plum) 0%, var(--plum-mid) 50%, var(--plum) 100%);
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.item.visible { opacity: 1; transform: none; }
+.item:last-child { border-bottom: none; }
+
+.item-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 300;
+  color: rgba(192,82,122,0.3);
+  line-height: 1;
+  text-align: center;
+  padding-top: 2px;
+}
+
+.item-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--rose-pale);
+  margin-bottom: 6px;
+}
+
+.item-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ---- QUOTE ---- */
+.quote-section {
+  text-align: center;
+  padding: 60px 24px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.quote-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 100% at 50% 50%, rgba(192,82,122,0.12) 0%, transparent 70%);
+}
+
+.quote-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px;
+  color: rgba(192,82,122,0.15);
+  line-height: 0.7;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 6vw, 36px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+  color: #fff;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+blockquote.visible { opacity: 1; transform: none; }
+
+/* ---- PRICE ---- */
+.price-section {
+  background: linear-gradient(180deg, var(--plum) 0%, var(--plum-mid) 100%);
+}
+
+.price-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(192,82,122,0.25);
+  border-radius: 24px;
+  padding: 40px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.price-card.visible { opacity: 1; transform: none; }
+
+.price-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,160,106,0.6), transparent);
+}
+
+.price-glow {
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 200px; height: 200px;
+  background: radial-gradient(ellipse, rgba(192,82,122,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.price-badge {
+  display: inline-block;
+  background: rgba(192,82,122,0.15);
+  border: 1px solid rgba(192,82,122,0.3);
+  color: var(--rose-light);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+.price-old {
+  font-size: 14px;
+  color: rgba(245,230,239,0.3);
+  text-decoration: line-through;
+  margin-bottom: 8px;
+}
+
+.price-value {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(56px, 15vw, 84px);
+  font-weight: 300;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 4px;
+  text-align: center;
+  letter-spacing: -2px;
+}
+
+.price-save {
+  font-size: 13px;
+  color: var(--gold);
+  margin-bottom: 32px;
+}
+
+.price-cta {
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, #c0527a 0%, #8b2550 100%);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 20px 32px;
+  border-radius: 60px;
+  text-decoration: none;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 40px rgba(192,82,122,0.35);
+  position: relative;
+  overflow: hidden;
+}
+.price-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
+  border-radius: inherit;
+}
+.price-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 50px rgba(192,82,122,0.55);
+}
+.price-cta:active { transform: scale(0.97); }
+
+.price-note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: rgba(245,230,239,0.3);
+  text-align: center;
+}
+
+/* ---- URGENCY ---- */
+.urgency {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(200,160,106,0.08);
+  border: 1px solid rgba(200,160,106,0.2);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-top: 20px;
+}
+.urgency-dot {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200,160,106,0.6); }
+  50% { box-shadow: 0 0 0 6px rgba(200,160,106,0); }
+}
+.urgency-text {
+  font-size: 13px;
+  color: var(--gold);
+  line-height: 1.4;
+}
+
+/* ---- FOOTER ---- */
+footer {
+  text-align: center;
+  padding: 48px 24px;
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+footer p {
+  font-size: 13px;
+  color: rgba(245,230,239,0.25);
+}
+
+/* ---- ANIMATIONS ---- */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---- ORNAMENT ---- */
+.ornament {
+  text-align: center;
+  color: rgba(192,82,122,0.3);
+  font-size: 18px;
+  letter-spacing: 8px;
+  padding: 8px 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 400px) {
+  .hero { padding: 48px 16px 70px; }
+  section { padding: 60px 16px; }
+  .price-card { padding: 32px 20px; }
+  .item { grid-template-columns: 36px 1fr; gap: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="eyebrow">3 сентября · только один вечер</div>
+    <h1 class="hero-title">
+      День<br><em>прощаний</em>
+    </h1>
+    <p class="hero-desc">Девичник, где мы отпускаем всё лишнее и ненужное. И зовём тебя с собой</p>
+    <a class="hero-cta" href="https://payform.ru/3tcijOU/">Занять место за 3 500 ₽</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>листай</span>
+  </div>
+</section>
+
+<div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<!-- WHAT YOU GET -->
+<section class="what-bg">
+  <div class="section-inner">
+    <p class="section-label">что тебя ждёт</p>
+    <h2 class="section-title">Вечер, который<br><em>меняет</em></h2>
+    <div class="items-list">
+      <div class="item">
+        <div class="item-num">I</div>
+        <div>
+          <div class="item-title">Ритуал прощания</div>
+          <div class="item-desc">Практика освобождения от всего, что давно пора отпустить. Мысли, отношения, привычки: всё, что тянет назад.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">II</div>
+        <div>
+          <div class="item-title">Живой круг девушек</div>
+          <div class="item-desc">Атмосфера настоящей близости и принятия. Здесь можно выдохнуть и позволить себе быть собой без масок.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">III</div>
+        <div>
+          <div class="item-title">Пространство для себя</div>
+          <div class="item-desc">Вечер, когда ты наконец на первом месте. Не забота о других, не список дел. Только ты.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-num">IV</div>
+        <div>
+          <div class="item-title">Новое начало</div>
+          <div class="item-desc">Уйдёшь другой: лёгкой, свободной и готовой к тому, что идёт на смену старому.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <div class="quote-mark">"</div>
+  <blockquote>Мы прощаемся со всем лишним. И зовём тебя с&nbsp;собой.</blockquote>
+</div>
+
+<div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<!-- PRICE -->
+<section class="price-section">
+  <div class="section-inner">
+    <p class="section-label">участие</p>
+    <h2 class="section-title">Твоё<br><em>место</em></h2>
+
+    <div class="price-card">
+      <div class="price-glow"></div>
+      <div class="price-badge">Специальная цена</div>
+      <div class="price-old">4 500 ₽ без скидки</div>
+      <div class="price-value">3 500 ₽</div>
+      <div class="price-save">Ты экономишь 1 000 ₽</div>
+      <a class="price-cta" href="https://payform.ru/3tcijOU/">Оплатить и занять место →</a>
+      <div class="urgency">
+        <div class="urgency-dot"></div>
+        <div class="urgency-text">Цена 3 500 ₽ действует ограниченно. После повышения или когда места закончатся.</div>
+      </div>
+    </div>
+    <p class="price-note">Безопасная оплата · Место закрепляется сразу · 3 сентября</p>
+  </div>
+</section>
+
+<footer>
+  <p>3 сентября · День прощаний</p>
+</footer>
+
+<script>
+// Particles
+(function() {
+  const container = document.getElementById('particles');
+  const colors = ['rgba(192,82,122,0.6)', 'rgba(200,160,106,0.5)', 'rgba(232,160,192,0.4)', 'rgba(255,255,255,0.3)'];
+  const sizes = [2, 3, 4, 3, 2];
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = sizes[Math.floor(Math.random() * sizes.length)];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const duration = 12 + Math.random() * 18;
+    const delay = -Math.random() * 20;
+    const left = Math.random() * 100;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      background:${color};
+      left:${left}%;
+      animation-duration:${duration}s;
+      animation-delay:${delay}s;
+    `;
+    container.appendChild(p);
+  }
+})();
+
+// Intersection observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const delay = el.dataset.delay || 0;
+      setTimeout(() => el.classList.add('visible'), delay * 120);
+      observer.unobserve(el);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.item').forEach((el, i) => {
+  el.dataset.delay = i;
+  observer.observe(el);
+});
+document.querySelectorAll('blockquote, .price-card').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
